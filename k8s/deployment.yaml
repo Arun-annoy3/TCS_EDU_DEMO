@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: demo-app
+  name: edu-tcs
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: demo
+      app: edu-tcs
   template:
     metadata:
       labels:
-        app: demo
+        app: edu-tcs
     spec:
       containers:
-      - name: demo-container
-        image: your-dockerhub-username/demo-app:latest
+      - name: container
+        image: arun3333/edu-tcs-demo:latest
         ports:
         - containerPort: 8080
