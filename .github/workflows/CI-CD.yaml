@@ -41,10 +41,10 @@ jobs:
           chmod +x kubectl
           sudo mv kubectl /usr/local/bin/
 
-      - name: Set up kubeconfig
+      
+      - name: Use local kubeconfig
         run: |
-          mkdir -p $HOME/.kube
-          echo "${{ secrets.KUBECONFIG }}" | base64 --decode > $HOME/.kube/config
+           export KUBECONFIG=$HOME/.kube/config
 
       - name: Deploy to Kubernetes
         run: |
