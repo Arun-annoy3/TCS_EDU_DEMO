@@ -19,7 +19,7 @@ jobs:
           distribution: 'temurin'
 
       - name: Install Maven
-        run: sudo apt-get install -y maven
+        run: sudo apt-get update && sudo apt-get install -y maven
 
       - name: Build with Maven
         run: mvn clean package -DskipTests=false
@@ -37,14 +37,19 @@ jobs:
 
       - name: Install kubectl
         run: |
-          curl -LO "https://dl.k8s.io/release/$(curl -sL https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+          curl -LO "https://dl.k8s.io/release/$(curl -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
           chmod +x kubectl
           sudo mv kubectl /usr/local/bin/
 
-      
-      - name: Use local kubeconfig
+      - name: Start Minikube (if not already running)
         run: |
-           export KUBECONFIG=$HOME/.kube/config
+          minikube status || minikube start --driver=docker
+          minikube addons enable ingress
+
+      - name: Set Minikube context
+        run: |
+          kubectl config use-context minikube
+          kubectl get nodes
 
       - name: Deploy to Kubernetes
         run: |
