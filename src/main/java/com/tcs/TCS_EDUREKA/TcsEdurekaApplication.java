@@ -10,4 +10,13 @@ public class TcsEdurekaApplication {
 		SpringApplication.run(TcsEdurekaApplication.class, args);
 	}
 
+	 @RestController
+    class GreetingController {
+
+        @GetMapping("/greeting")
+        public String greeting() {
+            return "Hello from TCS Edu Demo!";
+        }
+    }
+
 }
